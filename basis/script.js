@@ -4,6 +4,10 @@
 const studentName = "Timothy Falorni";
 const studentGroup = "MD2A";
 const year = main.year;
+const studentClass = document.getElementsByClassName("studentGroup");
+const pageYear = document.getElementsByClassName("pageYear");
+const studentNameClass = document.getElementsByClassName("studentName");
+
 
 // Init
 init();
@@ -15,6 +19,8 @@ function init() {
     document.getElementById("studentName").innerText = studentName;
     // Add navigation link to the navigation panel on the left of the page
     main.addContenItem("Inleiding", intro);
+    //activate the right insert of values
+    myValue();
     // Activate the first navigation link
     intro();
 }
@@ -37,7 +43,7 @@ function intro() {
 
     // Create the label
     var label = document.createElement("label");
-    label.innerHTML = "Brendan Eich";
+    label.innerHTML = studentName;
 
     // Create the paragraph and add the image and label to it
     var p = document.createElement("p");
@@ -47,4 +53,22 @@ function intro() {
     
     // Add the paragraph to the DOM
     element.appendChild(p); 
+}
+
+function myValue() {
+    //change the group in the page
+    for(let i = 0; i < studentClass.length; i++ ){
+        studentClass[i].innerText = studentGroup;
+    }
+
+    //change my name
+    for(let i = 0; i < studentNameClass.length; i++ ){
+        studentNameClass[i].innerText = studentName;
+    }
+
+    //change the year
+    for(let i = 0; i < pageYear.length; i++ ){
+        pageYear[i].innerText = year;
+    }
+
 }
