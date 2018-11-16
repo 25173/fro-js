@@ -227,7 +227,7 @@ var part4 = {
     },
 
     //Tip: lees eerst https://www.w3schools.com/js/js_json_syntax.asp
-    instruction2: function () {
+     instruction2: function () {
         // Omschrijving van de opdracht
         var description = "<p>" + "JSON is een formaat dat heel veel gebruikt wordt in de wereld van webontwikkeling. "
             + "Met name bij het gebruik van een webAPI. "
@@ -353,6 +353,9 @@ var part4 = {
     }
 
 };
+
+
+var part5
 
 // Sub functions
 
