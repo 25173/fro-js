@@ -22,6 +22,7 @@ function init() {
     main.addContenItem("Inleiding", intro);
     main.addContenItem("Variabelen", variables);
     main.addContenItem("object",objects);
+    main.addContenItem("array",array);
     //activate the right insert of values
     myValue();
     // Activate the first navigation link
@@ -150,4 +151,53 @@ function objects() {
     let description = title + text
 
     main.updateContent("Object", description)
+}
+
+function array() {
+    let description;
+    let meting1 = {
+        poscode: "1234AB",
+        huisnummer:99,
+        datum:"2018-01-01",
+        gas: 300,
+        water: 30,
+        elecktriceteit: [1001, 1002],
+        slimmeMeter:true
+    };
+    let meting2 = {
+        poscode: "1234AB",
+        huisnummer:45,
+        datum:"2018-01-01",
+        gas: 130,
+        water: 130,
+        elecktriceteit: [11001, 11002],
+        slimmeMeter:false
+    };
+    let metingen = [];
+    metingen.push(meting1);
+    metingen.push(meting2);
+    // console.log(metingen); // controle of het werkt
+    description = "<strong> overzicht van de metingen voor poscode 1234AB </strong><br><br>";
+
+    description+= "<table>" +
+        "<tr id='firstRow'>" +
+        "<th>postcode:</th> <th>huisnummer</th> <th>datum</th> <th>gas</th><th>water</th><th>electriciteit</th><th>slimmemeter</th>" +
+        "</tr>";
+
+    for (let i = 0; i < metingen.length; i++){
+        description += "<tr> <th> " + metingen[i].poscode+ "</th>" ;
+        description += "<th>"+ metingen[i].huisnummer+"</th>";
+        description += "<th>"+ metingen[i].datum+"</th>";
+        description += "<th>"+ metingen[i].gas+"</th>";
+        description += "<th>"+ metingen[i].water+"</th>";
+        description += "<th>"+ metingen[i].elecktriceteit[0] +","+ metingen[i].elecktriceteit[1]+"</th>";
+        description += "<th>"+ metingen[i].slimmeMeter+"</th>";
+        description += "</tr>";
+        }
+        description += " </table>";
+
+
+
+    main.updateContent("array",description)
+
 }
