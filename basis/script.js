@@ -23,10 +23,11 @@ function init() {
     main.addContenItem("Variabelen", variables);
     main.addContenItem("object",objects);
     main.addContenItem("array",array);
+    main.addContenItem("AJAX - tabel",ajax1);
     //activate the right insert of values
     myValue();
     // Activate the first navigation link
-    intro();
+    ajax1();
 }
 
 function intro() {
@@ -178,6 +179,7 @@ function array() {
     metingen.push(meting2);
     // console.log(metingen); // controle of het werkt
     description = "<strong> overzicht van de metingen voor poscode 1234AB </strong><br><br>";
+    description += meting2;
 
     description+= "<table>" +
         "<tr id='firstRow'>" +
@@ -200,4 +202,83 @@ function array() {
 
     main.updateContent("array",description)
 
+}
+
+function ajax1() {
+    // De URL van de webAPI
+    let url = "http://gert-rikkers.nl/api/meterstanden";
+    let description;
+    // Zorg ervoor dat de opdracht goed wordt uitgevoerd en dat de content wordt bijgewerkt.
+    let gasverbruikt;
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            description += "<strong> overzicht van de metingen voor poscode 1234AB </strong><br><br>";
+            let myArr = JSON.parse(this.responseText);
+            // console.log(this.responseText);
+            // console.log(description);
+            console.log(myArr);
+            // description += myArr;
+            description+= "<table>" +
+                "<tr id='firstRow'>" +
+                "<th>postcode:</th> <th>huisnummer</th> <th>datum</th> <th>gas</th><th>water</th><th>slimmemeter</th><th>electriciteit hoog</th><th>electriciteit laag</th><th>maand</th><th>gasverbruikt</th> " +
+                "</tr>";
+
+            for (let i = 0; i < myArr.length; i++){
+                description += "<tr><th>" + myArr[i].postcode+ "</th>" ;
+                description += "<th>"+ myArr[i].huisnummer+"</th>";
+                description += "<th>"+ myArr[i].datum+"</th>";
+                description += "<th>"+ myArr[i].gas+"</th>";
+                description += "<th>"+ myArr[i].water+"</th>";
+                description += "<th>"+ slimmemeter(myArr[i].slimmeMeter) +"</th>";
+                description += "<th>"+ myArr[i].elektriciteit[0] +"</th>";
+                description += "<th>"+ myArr[i].elektriciteit[1] +"</th>";
+                description += "<th>"+ maand(i) +"</th>";
+                if (i !== 0 ) {
+                    description += "<th>" + gasVerbruikt(gasverbruikt, myArr[i].gas) + "</th>";
+                }else {
+                    description += "<th>" + myArr[i].gas + "</th>";
+                }
+                gasverbruikt = myArr[i].gas;
+                description += "</tr>";
+            }
+            description += " </table>";
+
+            main.updateContent("Ajax-tabel",description);
+        }
+    };
+    xhttp.open("GET", url, true);
+
+    xhttp.send();
+
+}
+
+function slimmemeter(meter) {
+    if (meter){
+        return "+";
+    }else {
+        return "";
+    }
+}
+
+function gasVerbruikt(x,y) {
+    return y - x;
+}
+
+function maand( x) {
+    x = x % 12;
+    let month = new Array();
+    month[0] = "Jan";
+    month[1] = "Feb";
+    month[2] = "Mrt";
+    month[3] = "Apr";
+    month[4] = "Mei";
+    month[5] = "Jun";
+    month[6] = "Jul";
+    month[7] = "Aug";
+    month[8] = "Sep";
+    month[9] = "Okt";
+    month[10] = "Nov";
+    month[11] = "Dec";
+return month[x];
 }
